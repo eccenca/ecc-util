@@ -1,0 +1,32 @@
+{
+  "name": "ecc-utils",
+  "version": "0.0.0",
+  "description": "A set of small utility function that may not fit in any other package",
+  "main": "es5/component.js",
+  "es5": "es5/component.js",
+  "es6": "index.js",
+  "scripts": {
+    "build": "gulp",
+    "init": "ecc-link-dotfiles",
+    "prepublish": "npm run init && npm run build",
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elds/ecc-util.git"
+  },
+  "author": "eccenca GmbH <opensource@eccenca.com> (http://eccenca.com)",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/elds/ecc-util/issues"
+  },
+  "homepage": "https://github.com/elds/ecc-util#readme",
+  "publishConfig": {
+    "registry": "http://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "ecc-dotfiles": "^1.6.0",
+    "ecc-gulp-tasks": "^2.5.0",
+    "should": "^11.1.0"
+  }
+}
