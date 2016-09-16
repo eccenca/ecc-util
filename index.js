@@ -1,3 +1,3 @@
 
-export * from './src/changeFavicon';
-export * from './src/locales';
+export {changeFavicon} from './src/changeFavicon';
+export {getBestLocale, getBrowserLocales} from './src/locales';
