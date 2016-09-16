@@ -1,6 +1,6 @@
 {
   "name": "ecc-utils",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "A set of small utility function that may not fit in any other package",
   "main": "es5/component.js",
   "es5": "es5/component.js",
@@ -27,6 +27,10 @@
   "devDependencies": {
     "ecc-dotfiles": "^1.6.0",
     "ecc-gulp-tasks": "^2.5.0",
-    "should": "^11.1.0"
+    "should": "^11.1.0",
+    "sinon": "^1.17.5"
+  },
+  "dependencies": {
+    "lodash": "^4.15.0"
   }
 }
