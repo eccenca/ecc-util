@@ -29,5 +29,8 @@
     "ecc-gulp-tasks": "^2.5.0",
     "should": "^11.1.0",
     "sinon": "^1.17.5"
+  },
+  "dependencies": {
+    "lodash": "^4.15.0"
   }
 }
