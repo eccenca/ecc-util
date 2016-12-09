@@ -25,8 +25,8 @@
     "registry": "http://registry.npmjs.org/"
   },
   "devDependencies": {
-    "ecc-dotfiles": "^1.6.0",
-    "ecc-gulp-tasks": "^2.5.0",
+    "ecc-dotfiles": "^1.9.1",
+    "ecc-gulp-tasks": "^3.0.0",
     "should": "^11.1.0",
     "sinon": "^1.17.5"
   },

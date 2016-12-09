@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) and [Keep A Changelog's Format](http://keepachangelog.com/).
 
+## [Unreleased]
+- Added 
+
 ## [1.0.1] 2016-09-17
 ### Fixed
 - Fix faulty built caused by a babel bug
