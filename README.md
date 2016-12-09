@@ -2,6 +2,19 @@
 
 A set of small utility function that may not fit in any other package.
 
+## uuid
+
+Creates a `v4` uuid.
+Is basically a wrapper around the npm package `uuid`.
+For options see [here](https://github.com/kelektiv/node-uuid#uuidv4options--buffer--offset)
+
+```js
+import {uuid} from 'ecc-util';
+
+const id = uuid();
+
+```
+
 ## changeFavicon
 
 Change a favicon of a website dynamically.
