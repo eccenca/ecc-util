@@ -9,9 +9,25 @@ Is basically a wrapper around the npm package `uuid`.
 For options see [here](https://github.com/kelektiv/node-uuid#uuidv4options--buffer--offset)
 
 ```js
-import {uuid} from 'ecc-util';
+import {uuid} from 'ecc-utils';
 
 const id = uuid();
+
+```
+
+## URI
+
+Wrapper around [URI.js](https://github.com/medialize/URI.js).
+
+```js
+
+import {URI} from 'ecc-utils'
+
+const newURI = new URI('http://example.org');
+
+//Our wrapper adds this check:
+//Returns true if URI is urn-like or an absolute URL
+newURI.is('resourceURI');
 
 ```
 
@@ -20,7 +36,7 @@ const id = uuid();
 Change a favicon of a website dynamically.
 
 ```js
-import {changeFavicon} from 'ecc-util';
+import {changeFavicon} from 'ecc-utils';
 
 changeFavicon(
 "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgAQMAAABJtOi3AAAABlBMVEUAAAD+jwHRIVMHAAAAAXRSTlMAQObYZgAAAHlJREFU" +
@@ -34,7 +50,7 @@ changeFavicon(
 Retrieve preferred locales by the user. Values are read from the `window.navigator` object
 
 ```js
-import {getBrowserLocales} from 'ecc-util';
+import {getBrowserLocales} from 'ecc-utils';
 
 //Returns for example ['de-AT', 'de', 'en']
 getBrowserLocales()
@@ -47,7 +63,7 @@ Preferred locales default to `getBrowserLocales` and order is important (First i
 If no match can be found a default locale will be returned.
 
 ```js
-import {getBestLocale} from 'ecc-util';
+import {getBestLocale} from 'ecc-utils';
 
 //returns 'en' (default value)
 getBestLocale()

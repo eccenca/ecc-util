@@ -2,7 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) and [Keep A Changelog's Format](http://keepachangelog.com/).
 
+## [1.2.0] 2017-01-10 
+### Added
+- URI.js wrapper
+
 ## [1.1.0] 2016-12-09
+### Added
 - Added `uuid` function
 
 ## [1.0.1] 2016-09-17
@@ -10,7 +15,6 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep A Ch
 - Fix faulty built caused by a babel bug
 
 ## [1.0.0] 2016-09-17
-
 ### Added
 
 - `changeFavicon`: Change a favicon of a website dynamically.
