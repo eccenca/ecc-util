@@ -53,7 +53,7 @@ Retrieve preferred locales by the user. Values are read from the `window.navigat
 import {getBrowserLocales} from 'ecc-utils';
 
 //Returns for example ['de-AT', 'de', 'en']
-getBrowserLocales()
+getBrowserLocales();
 ```
 
 ## getBestLocale
@@ -66,25 +66,37 @@ If no match can be found a default locale will be returned.
 import {getBestLocale} from 'ecc-utils';
 
 //returns 'en' (default value)
-getBestLocale()
+getBestLocale();
 
 //returns 'de' (default value)
-getBestLocale({defaultLocale: 'de'})
+getBestLocale({defaultLocale: 'de'});
 
 //suppose a user has a preference of ['de-AT', 'en'] in their browser
 //returns 'de'
-getBestLocale({supportedLocales: ['de', 'en']})
+getBestLocale({supportedLocales: ['de', 'en']});
 
 //returns 'en-AU'
 getBestLocale({
     preferredLocales: ['de-AT', 'en'],
-    supportedLocales: ['en-AU', 'ru-RU']
-})
+    supportedLocales: ['en-AU', 'ru-RU'],
+});
 
 //Sometimes order matters in supportedLocales
 //suppose a user has a preference of ['en-US', 'de'] in their browser
 //returns 'en'
-getBestLocale({supportedLocales: ['en', 'en-AU', 'de']})
+getBestLocale({supportedLocales: ['en', 'en-AU', 'de']});
 //returns 'en-AU'
-getBestLocale({supportedLocales: ['en-AU', 'en', 'de']})
+getBestLocale({supportedLocales: ['en-AU', 'en', 'de']});
+```
+
+## sanitizeString
+
+Transform all not common letters like 'ö,ä,ü,é' to standard latin and replace all special characters like '$,],¶' to a signle '_' from a given string.
+
+```js
+import {sanitizeString} from 'ecc-utils';
+
+string = '<oxo|{[¢$frmble?';
+//Returns 'oxo_frmble'
+sanitizeString(string);
 ```
