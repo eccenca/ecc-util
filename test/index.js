@@ -4,7 +4,7 @@ import should from 'should';
 import sinon from 'sinon';
 import _ from 'lodash';
 
-import {changeFavicon, getBestLocale, getBrowserLocales, uuid, URI} from '../index';
+import {changeFavicon, getBestLocale, getBrowserLocales, uuid, URI, sanitizeFileName} from '../index';
 
 // main test suite
 describe('changeFavicon', () => {
@@ -236,6 +236,32 @@ describe('URI', () => {
                     isResourceUri,
                     `${url} should ${isResourceUri? '' : 'not'} recognized as an resourceURI`
                 )
+            ;
+        });
+
+    });
+
+});
+
+describe('sanitizeFileName', () => {
+
+    it('should format Strings correctly', () => {
+
+        // Key Value Map of uri -> isResourceUri
+        const tests = [
+            //origin ---- formatted
+            ['oxofrmble', 'oxofrmble'],
+            ['oxöfrämble', 'oxoframble'],
+            ['<oxo|{[¢$frmble?', 'oxo_frmble'],
+        ];
+
+        _.forEach(tests, (value) => {
+
+            const originString = value[0];
+            const formattedString = value[1];
+
+            should(sanitizeFileName(originString))
+            .equal(formattedString)
             ;
         });
 

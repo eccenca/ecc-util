@@ -3,12 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) and [Keep A Changelog's Format](http://keepachangelog.com/).
 
 ## [Unreleased]
-
-TODO: add at least one Added, Changed, Deprecated, Removed, Fixed or Security section
+## Added
+- `sanitizeFileName.js` for string normalizing
 
 ## [1.2.0] 2017-01-10 
 ### Added
-- URI.js wrapper
+- `URI.js` wrapper
 
 ## [1.1.0] 2016-12-09
 ### Added
