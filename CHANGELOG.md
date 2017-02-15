@@ -4,7 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep A Ch
 
 ## [Unreleased]
 ## Added
-- `sanitizeString.js` for string normalizing
+- `sanitizeFileName.js` for string normalizing
 
 ## [1.2.0] 2017-01-10 
 ### Added

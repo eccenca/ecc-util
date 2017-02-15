@@ -89,14 +89,14 @@ getBestLocale({supportedLocales: ['en', 'en-AU', 'de']});
 getBestLocale({supportedLocales: ['en-AU', 'en', 'de']});
 ```
 
-## sanitizeString
+## sanitizeFileName
 
 Transform all not common letters like 'ö,ä,ü,é' to standard latin and replace all special characters like '$,],¶' to a signle '_' from a given string.
 
 ```js
-import {sanitizeString} from 'ecc-utils';
+import {sanitizeFileName} from 'ecc-utils';
 
 string = '<oxo|{[¢$frmble?';
 //Returns 'oxo_frmble'
-sanitizeString(string);
+sanitizeFileName(string);
 ```

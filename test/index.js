@@ -4,7 +4,7 @@ import should from 'should';
 import sinon from 'sinon';
 import _ from 'lodash';
 
-import {changeFavicon, getBestLocale, getBrowserLocales, uuid, URI, sanitizeString} from '../index';
+import {changeFavicon, getBestLocale, getBrowserLocales, uuid, URI, sanitizeFileName} from '../index';
 
 // main test suite
 describe('changeFavicon', () => {
@@ -260,7 +260,7 @@ describe('sanitizeString', () => {
             const originString = value[0];
             const formattedString = value[1];
 
-            should(sanitizeString(originString))
+            should(sanitizeFileName(originString))
             .equal(formattedString)
             ;
         });

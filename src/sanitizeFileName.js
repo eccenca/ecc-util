@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 // remove all not common letters and characters from string
-export const sanitizeString = function(string) {
+export const sanitizeFileName = function(string) {
     string = _.chain(string)
     // convert to basic latin letters
     .deburr()
