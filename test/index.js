@@ -243,7 +243,7 @@ describe('URI', () => {
 
 });
 
-describe('sanitizeString', () => {
+describe('sanitizeFileName', () => {
 
     it('should format Strings correctly', () => {
 
