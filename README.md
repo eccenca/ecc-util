@@ -91,12 +91,13 @@ getBestLocale({supportedLocales: ['en-AU', 'en', 'de']});
 
 ## sanitizeFileName
 
-Transform all not common letters like 'ö,ä,ü,é' to standard latin and replace all special characters like '$,],¶' to a signle '_' from a given string.
+Transform all not common letters like 'ö,ä,ü,é' to standard latin and replace all special characters like '$,],¶' to a single '_' from a given string.
+Has optional parameter `ensureType` in options
 
 ```js
 import {sanitizeFileName} from 'ecc-utils';
 
-string = '<oxo|{[¢$frmble?';
-//Returns 'oxo_frmble'
-sanitizeFileName(string);
+string = '<oxo|{[¢$frmble?.csv';
+//Returns 'oxo_frmble.csv'
+sanitizeFileName(string, {ensureType: 'csv'});
 ```
