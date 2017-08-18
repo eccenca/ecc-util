@@ -101,3 +101,43 @@ string = '<oxo|{[¢$frmble?.csv';
 //Returns 'oxo_frmble.csv'
 sanitizeFileName(string, {ensureType: 'csv'});
 ```
+
+## convertSpringPropertyObject
+
+Helps to convert Spring Property Objects to proper Javascript Objects
+
+```js
+        const input = {
+            'foo.bar.string': '123',
+            'foo.bar.array': ["a", "b", "c"],
+            '[http://example.org]foo.bar': {
+                'a.b': 12
+            }
+        };
+
+        const output =
+            {
+                "foo": {
+                    "bar": {
+                        "array": [
+                            "a",
+                            "b",
+                            "c",
+                        ],
+                        "string": "123"
+                    }
+                },
+                "http://example.org": {
+                    "foo": {
+                        "bar": {
+                            "a": {
+                                "b": 12
+                            }
+                        }
+                    }
+                }
+            }
+        ;
+
+        should(convertSpringPropertyObject(input)).deepEqual(output);
+```

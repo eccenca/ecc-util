@@ -2,15 +2,21 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) and [Keep A Changelog's Format](http://keepachangelog.com/).
 
+## [1.4.0] 2017-08-18
+
+### Added
+
+- Utility function `convertSpringPropertyObject` for convert Spring Property Objects into their proper js representation
+
 ## [1.3.1] 2017-07-28
 ### Added
 - `ensureType` optional parameter to `sanitizeFileName`
 
-## [1.3.0] 2017-02-15 
+## [1.3.0] 2017-02-15
 ### Added
 - `sanitizeFileName.js` for string normalizing
 
-## [1.2.0] 2017-01-10 
+## [1.2.0] 2017-01-10
 ### Added
 - `URI.js` wrapper
 
