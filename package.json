@@ -1,6 +1,6 @@
 {
   "name": "ecc-utils",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "description": "A set of small utility function that may not fit in any other package",
   "main": "es5/component.js",
   "es5": "es5/component.js",
