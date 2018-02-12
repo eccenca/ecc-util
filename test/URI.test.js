@@ -28,6 +28,10 @@ describe('URI', () => {
             //      scheme = ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )
             //      ALPHA  = %x41-5A / %x61-7A   ; A-Z / a-z (https://tools.ietf.org/html/rfc2234)
             ['prötöcol:data', false],
+            ['http:/', true],
+            ['http://', false],
+            [':foo', true],
+            ['urn:', true],
         ];
 
         _.forEach(tests, value => {
