@@ -1,4 +1,4 @@
-# ecc-utils collection
+# @eccenca/utils collection
 
 A set of small utility function that may not fit in any other package.
 
@@ -9,7 +9,7 @@ Is basically a wrapper around the npm package `uuid`.
 For options see [here](https://github.com/kelektiv/node-uuid#uuidv4options--buffer--offset)
 
 ```js
-import {uuid} from 'ecc-utils';
+import {uuid} from '@eccenca/utils';
 
 const id = uuid();
 
@@ -21,7 +21,7 @@ Wrapper around [URI.js](https://github.com/medialize/URI.js).
 
 ```js
 
-import {URI} from 'ecc-utils'
+import {URI} from '@eccenca/utils'
 
 const newURI = new URI('http://example.org');
 
@@ -36,7 +36,7 @@ newURI.is('resourceURI');
 Change a favicon of a website dynamically.
 
 ```js
-import {changeFavicon} from 'ecc-utils';
+import {changeFavicon} from '@eccenca/utils';
 
 changeFavicon(
 "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgAQMAAABJtOi3AAAABlBMVEUAAAD+jwHRIVMHAAAAAXRSTlMAQObYZgAAAHlJREFU" +
@@ -50,7 +50,7 @@ changeFavicon(
 Retrieve preferred locales by the user. Values are read from the `window.navigator` object
 
 ```js
-import {getBrowserLocales} from 'ecc-utils';
+import {getBrowserLocales} from '@eccenca/utils';
 
 //Returns for example ['de-AT', 'de', 'en']
 getBrowserLocales();
@@ -63,7 +63,7 @@ Preferred locales default to `getBrowserLocales` and order is important (First i
 If no match can be found a default locale will be returned.
 
 ```js
-import {getBestLocale} from 'ecc-utils';
+import {getBestLocale} from '@eccenca/utils';
 
 //returns 'en' (default value)
 getBestLocale();
@@ -95,7 +95,7 @@ Transform all not common letters like 'ö,ä,ü,é' to standard latin and replac
 Has optional parameter `ensureType` in options
 
 ```js
-import {sanitizeFileName} from 'ecc-utils';
+import {sanitizeFileName} from '@eccenca/utils';
 
 string = '<oxo|{[¢$frmble?.csv';
 //Returns 'oxo_frmble.csv'
@@ -107,37 +107,37 @@ sanitizeFileName(string, {ensureType: 'csv'});
 Helps to convert Spring Property Objects to proper Javascript Objects
 
 ```js
-        const input = {
-            'foo.bar.string': '123',
-            'foo.bar.array': ["a", "b", "c"],
-            '[http://example.org]foo.bar': {
-                'a.b': 12
-            }
-        };
+    const input = {
+        'foo.bar.string': '123',
+        'foo.bar.array': ["a", "b", "c"],
+        '[http://example.org]foo.bar': {
+            'a.b': 12
+        }
+    };
 
-        const output =
-            {
+    const output =
+        {
+            "foo": {
+                "bar": {
+                    "array": [
+                        "a",
+                        "b",
+                        "c",
+                    ],
+                    "string": "123"
+                }
+            },
+            "http://example.org": {
                 "foo": {
                     "bar": {
-                        "array": [
-                            "a",
-                            "b",
-                            "c",
-                        ],
-                        "string": "123"
-                    }
-                },
-                "http://example.org": {
-                    "foo": {
-                        "bar": {
-                            "a": {
-                                "b": 12
-                            }
+                        "a": {
+                            "b": 12
                         }
                     }
                 }
             }
-        ;
+        }
+    ;
 
-        should(convertSpringPropertyObject(input)).deepEqual(output);
+    should(convertSpringPropertyObject(input)).deepEqual(output);
 ```

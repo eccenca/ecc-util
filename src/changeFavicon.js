@@ -1,7 +1,5 @@
-
 // dynamically changes favicon
-export const changeFavicon = function(src) {
-
+export default src => {
     // polyfill getting head for older browsers
     const head = document.head || document.getElementsByTagName('head')[0];
 

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const splitKey = (key) => {
+const splitKey = key => {
     if (_.isArray(key)) {
         return key;
     }
@@ -22,17 +22,14 @@ const splitKey = (key) => {
             // If string contains no brackets, we split at every dot
             if (nextBracket === -1) {
                 r = _.concat(r, search.split('.'));
-                search = ''
-            }
-            // If string contains brackets, and a dot earlier, we break at the dot and are going to loop through
-            else if (nextDot > -1 && nextDot < nextBracket) {
+                search = '';
+            } else if (nextDot > -1 && nextDot < nextBracket) {
+                // If string contains brackets, and a dot earlier, we break at the dot and are going to loop through
                 const partialKey = search.substring(0, nextDot);
                 r.push(partialKey);
                 search = search.substring(nextDot + 1);
-            }
-            // If the code contains two brackets, we extract everything between them
-            else if (nextBracket > -1 && nextClosing > -1) {
-
+            } else if (nextBracket > -1 && nextClosing > -1) {
+                // If the code contains two brackets, we extract everything between them
                 const first = search.substring(0, nextBracket);
                 const second = search.substring(nextBracket + 1, nextClosing);
 
@@ -43,39 +40,39 @@ const splitKey = (key) => {
                 r.push(second);
 
                 search = search.substring(nextClosing + 1);
-
             } else {
                 r.push(search);
-                search = "";
+                search = '';
             }
-
         }
-
 
         return r;
     }
 
-
+    return undefined;
 };
 
 const setSpringValue = (result, initialKey, value) => {
-
-    let key = splitKey(initialKey);
+    const key = splitKey(initialKey);
 
     if (_.isPlainObject(value) || _.isArray(value)) {
-        _.forEach(value, (v, k) => setSpringValue(result, _.concat(key, splitKey(k)), v));
+        _.forEach(value, (v, k) =>
+            setSpringValue(result, _.concat(key, splitKey(k)), v)
+        );
     } else {
-        _.set(result, key, value)
+        _.set(result, key, value);
     }
 };
 
-const convertSpringPropertyObject = (obj) => {
-    return _.reduce(obj, (result, value, key) => {
+const convertSpringPropertyObject = obj =>
+    _.reduce(
+        obj,
+        (result, value, key) => {
+            setSpringValue(result, key, value);
 
-        setSpringValue(result, key, value);
-
-        return result;
-    }, {});
-};
+            return result;
+        },
+        {}
+    );
 
 export {convertSpringPropertyObject, splitKey};
