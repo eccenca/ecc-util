@@ -4,8 +4,8 @@ export const getBrowserLocales = () => {
     const browserLanguagePropertyKeys = [
         // Supported by FF and Chrome
         // https://developer.mozilla.org/en-US/docs/Web/API/NavigatorLanguage/languages
-        //languages contains an array of preferred languages ordered by preference
-        //language is first element of the array above
+        // languages contains an array of preferred languages ordered by preference
+        // language is first element of the array above
         'languages',
         'language',
         // IE specific, returns locale of the user
@@ -39,11 +39,16 @@ export const getBrowserLocales = () => {
  * @see {@link https://www.ietf.org/rfc/bcp/bcp47.txt|BCP 47}
  */
 export const getBestLocale = (options = {}) => {
-
-    const {supportedLocales = [], preferredLocales = getBrowserLocales(), defaultLocale = 'en'} = options;
+    const {
+        supportedLocales = [],
+        preferredLocales = getBrowserLocales(),
+        defaultLocale = 'en',
+    } = options;
 
     if (!_.isString(defaultLocale)) {
-        throw new Error('Invalid argument: defaultLocale is not a string' + defaultLocale);
+        throw new Error(
+            `Invalid argument: defaultLocale is not a string${defaultLocale}`
+        );
     }
 
     if (_.isEmpty(supportedLocales)) {
@@ -55,35 +60,40 @@ export const getBestLocale = (options = {}) => {
     let bestLocale = false;
 
     // Use some instead of forEach, so that we can break after the first match
-    _.some(preferredLocales, (preferred) => {
-
+    _.some(preferredLocales, preferred => {
         const prefLowerCase = preferred.toLocaleLowerCase();
 
         // Check if there is an exact match for the preferred locale
-        bestLocale = _.find(supportedLocales, supported => prefLowerCase === supported.toLocaleLowerCase());
+        bestLocale = _.find(
+            supportedLocales,
+            supported => prefLowerCase === supported.toLocaleLowerCase()
+        );
 
         // If we found no match, we do some fuzzy checks
         if (!bestLocale) {
             // If the preferred language is something like 'en',
             // we check if we have a best match like 'en-US'
             if (prefLowerCase.length === 2) {
-                bestLocale = _.find(supportedLocales, supported =>
-                    prefLowerCase === supported.toLocaleLowerCase().substr(0, 2)
+                bestLocale = _.find(
+                    supportedLocales,
+                    supported =>
+                        prefLowerCase ===
+                        supported.toLocaleLowerCase().substr(0, 2)
                 );
             } else if (prefLowerCase.length > 2) {
                 // If the preferred language is something like 'en-US',
                 // we check if we have a best match like 'en-AU' or 'en'
-                bestLocale = _.find(supportedLocales, supported =>
-                    prefLowerCase.substr(0, 2) === supported.toLocaleLowerCase().substr(0, 2)
+                bestLocale = _.find(
+                    supportedLocales,
+                    supported =>
+                        prefLowerCase.substr(0, 2) ===
+                        supported.toLocaleLowerCase().substr(0, 2)
                 );
             }
-
         }
 
         return _.isString(bestLocale);
-
     });
-
 
     return bestLocale || defaultLocale;
 };

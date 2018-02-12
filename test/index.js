@@ -4,12 +4,22 @@ import should from 'should';
 import sinon from 'sinon';
 import _ from 'lodash';
 
-import {changeFavicon, getBestLocale, getBrowserLocales, uuid, URI, sanitizeFileName} from '../index';
-import {convertSpringPropertyObject, splitKey} from '../src/convertSpringPropertyObject';
+import {
+    changeFavicon,
+    getBestLocale,
+    getBrowserLocales,
+    uuid,
+    URI,
+    sanitizeFileName,
+} from '../index';
+
+import {
+    convertSpringPropertyObject,
+    splitKey,
+} from '../src/convertSpringPropertyObject';
 
 // main test suite
 describe('changeFavicon', () => {
-
     beforeEach(() => {
         global.document = {
             createElement: sinon.stub().returns({}),
@@ -18,8 +28,8 @@ describe('changeFavicon', () => {
             head: {
                 appendChild: sinon.stub(),
                 removeChild: sinon.stub(),
-            }
-        }
+            },
+        };
     });
 
     afterEach(() => {
@@ -50,21 +60,22 @@ describe('changeFavicon', () => {
     });
 
     it('should use fallback api if document.head is not defined', () => {
-        const head = document.head;
+        const {head} = document;
         delete document.head;
+
         document.getElementsByTagName.returns([head]);
+
         changeFavicon('foo');
+
         sinon.assert.calledOnce(document.getElementsByTagName);
         sinon.assert.calledOnce(document.createElement);
         sinon.assert.calledOnce(document.getElementById);
         sinon.assert.notCalled(head.removeChild);
         sinon.assert.calledOnce(head.appendChild);
     });
-
 });
 
 describe('getBrowserLocales', () => {
-
     const languages = ['de-AT', 'de'];
     const language = languages[0];
     const userLanguage = 'ru';
@@ -114,7 +125,11 @@ describe('getBrowserLocales', () => {
             systemLanguage,
             browserLanguage,
         };
-        should(getBrowserLocales()).deepEqual([userLanguage, browserLanguage, systemLanguage]);
+        should(getBrowserLocales()).deepEqual([
+            userLanguage,
+            browserLanguage,
+            systemLanguage,
+        ]);
     });
 
     it('should read return a unique array', () => {
@@ -124,11 +139,9 @@ describe('getBrowserLocales', () => {
         };
         should(getBrowserLocales()).deepEqual(languages);
     });
-
 });
 
 describe('getBestLocale', () => {
-
     before(() => {
         global.window = {};
     });
@@ -137,76 +150,145 @@ describe('getBestLocale', () => {
         delete global.window;
     });
 
-
     const preferredLocales = ['en-US', 'de'];
 
     it('return valid values', () => {
         should(getBestLocale()).eql('en');
-        should(getBestLocale({supportedLocales: null, defaultLocale: 'de'})).eql('de');
-        should(getBestLocale({preferredLocales: null, defaultLocale: 'fr'})).eql('fr');
-        should(getBestLocale({supportedLocales: null, preferredLocales: null, defaultLocale: 'ru'})).eql('ru');
-        should(getBestLocale({supportedLocales: ['en-au'], preferredLocales, defaultLocale: 'ru'})).eql('en-au');
-        should(getBestLocale({supportedLocales: ['en-US'], preferredLocales, defaultLocale: 'ru'})).eql('en-US');
-        should(getBestLocale({supportedLocales: ['en'], preferredLocales, defaultLocale: 'ru'})).eql('en');
-        should(getBestLocale({supportedLocales: ['de', 'en-au'], preferredLocales, defaultLocale: 'ru'})).eql('en-au');
-        should(getBestLocale({supportedLocales: ['en', 'en-au'], preferredLocales, defaultLocale: 'ru'})).eql('en');
-        should(getBestLocale({supportedLocales: ['en-au', 'en'], preferredLocales, defaultLocale: 'ru'})).eql('en-au');
-        should(getBestLocale({supportedLocales: ['de-AT'], preferredLocales, defaultLocale: 'ru'})).eql('de-AT');
-        should(getBestLocale({supportedLocales: ['en'], preferredLocales, defaultLocale: 'ru'})).eql('en');
-
+        should(
+            getBestLocale({supportedLocales: null, defaultLocale: 'de'})
+        ).eql('de');
+        should(
+            getBestLocale({preferredLocales: null, defaultLocale: 'fr'})
+        ).eql('fr');
+        should(
+            getBestLocale({
+                supportedLocales: null,
+                preferredLocales: null,
+                defaultLocale: 'ru',
+            })
+        ).eql('ru');
+        should(
+            getBestLocale({
+                supportedLocales: ['en-au'],
+                preferredLocales,
+                defaultLocale: 'ru',
+            })
+        ).eql('en-au');
+        should(
+            getBestLocale({
+                supportedLocales: ['en-US'],
+                preferredLocales,
+                defaultLocale: 'ru',
+            })
+        ).eql('en-US');
+        should(
+            getBestLocale({
+                supportedLocales: ['en'],
+                preferredLocales,
+                defaultLocale: 'ru',
+            })
+        ).eql('en');
+        should(
+            getBestLocale({
+                supportedLocales: ['de', 'en-au'],
+                preferredLocales,
+                defaultLocale: 'ru',
+            })
+        ).eql('en-au');
+        should(
+            getBestLocale({
+                supportedLocales: ['en', 'en-au'],
+                preferredLocales,
+                defaultLocale: 'ru',
+            })
+        ).eql('en');
+        should(
+            getBestLocale({
+                supportedLocales: ['en-au', 'en'],
+                preferredLocales,
+                defaultLocale: 'ru',
+            })
+        ).eql('en-au');
+        should(
+            getBestLocale({
+                supportedLocales: ['de-AT'],
+                preferredLocales,
+                defaultLocale: 'ru',
+            })
+        ).eql('de-AT');
+        should(
+            getBestLocale({
+                supportedLocales: ['en'],
+                preferredLocales,
+                defaultLocale: 'ru',
+            })
+        ).eql('en');
     });
 
     it('should add the defaultLocale to supportedLocales', () => {
-        should(getBestLocale({
-            supportedLocales: ['en-au'],
-            preferredLocales: ['en-US'],
-            defaultLocale: 'en-US'
-        })).eql('en-US');
+        should(
+            getBestLocale({
+                supportedLocales: ['en-au'],
+                preferredLocales: ['en-US'],
+                defaultLocale: 'en-US',
+            })
+        ).eql('en-US');
     });
 
     it('should throw an Error if defaultLocale parameter is not a string', () => {
+        (function() {
+            getBestLocale({defaultLocale: null});
+        }.should.throw(/Invalid argument/));
 
         (function() {
-            getBestLocale({defaultLocale: null})
-        }).should.throw(/Invalid argument/);
-
-        (function() {
-            getBestLocale({defaultLocale: []})
-        }).should.throw(/Invalid argument/);
-
-
+            getBestLocale({defaultLocale: []});
+        }.should.throw(/Invalid argument/));
     });
-
 });
 
 describe('uuid', () => {
-
     it('should generate a uuid matching the uuid scheme', () => {
         should(uuid()).match(/[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}/);
     });
 
     it('should generate a fixed uuid with the same seed', () => {
-        should(uuid({
-            random: [
-                0x10, 0x91, 0x56, 0xbe, 0xc4, 0xfb, 0xc1, 0xea,
-                0x71, 0xb4, 0xef, 0xe1, 0x67, 0x1c, 0x58, 0x36
-            ]
-        })).equal('109156be-c4fb-41ea-b1b4-efe1671c5836');
+        should(
+            uuid({
+                random: [
+                    0x10,
+                    0x91,
+                    0x56,
+                    0xbe,
+                    0xc4,
+                    0xfb,
+                    0xc1,
+                    0xea,
+                    0x71,
+                    0xb4,
+                    0xef,
+                    0xe1,
+                    0x67,
+                    0x1c,
+                    0x58,
+                    0x36,
+                ],
+            })
+        ).equal('109156be-c4fb-41ea-b1b4-efe1671c5836');
     });
 
     it('should generate two different uuids in consecutive runs', () => {
         should(uuid()).not.equal(uuid());
     });
-
 });
 
 describe('URI', () => {
     it('should parse URIs correctly', () => {
-        should((new URI('http://example.org:80')).normalize().toString()).equal('http://example.org/')
+        should(new URI('http://example.org:80').normalize().toString()).equal(
+            'http://example.org/'
+        );
     });
 
     it('should monkeypatch `resourceURI` check', () => {
-
         // Key Value Map of uri -> isResourceUri
         const tests = [
             ['http://example.org:80', true],
@@ -225,30 +307,25 @@ describe('URI', () => {
             ['prötöcol:data', false],
         ];
 
-        _.forEach(tests, (value) => {
-
+        _.forEach(tests, value => {
             const url = value[0];
             const isResourceUri = value[1];
 
-            should((new URI(url)).is('resourceURI'))
-                .equal(
-                    isResourceUri,
-                    `${url} should ${isResourceUri ? '' : 'not'} recognized as an resourceURI`
-                )
-            ;
+            should(new URI(url).is('resourceURI')).equal(
+                isResourceUri,
+                `${url} should ${
+                    isResourceUri ? '' : 'not'
+                } recognized as an resourceURI`
+            );
         });
-
     });
-
 });
 
 describe('sanitizeFileName', () => {
-
     it('should format Strings correctly', () => {
-
         // Key Value Map of uri -> isResourceUri
         const tests = [
-            //origin ---- formatted
+            // origin ---- formatted
             ['oxofrmble', 'oxofrmble'],
             ['oxöfrämble', 'oxoframble'],
             ['<oxo|{[¢$frmble?', 'oxo_frmble'],
@@ -257,76 +334,79 @@ describe('sanitizeFileName', () => {
             ['.csv', '.csv', {ensureType: 'csv'}],
         ];
 
-        _.forEach(tests, (value) => {
-
+        _.forEach(tests, value => {
             const originString = value[0];
             const formattedString = value[1];
             const options = value[2] || {};
 
-            should(sanitizeFileName(originString, options))
-                .equal(formattedString)
-            ;
+            should(sanitizeFileName(originString, options)).equal(
+                formattedString
+            );
         });
-
     });
-
 });
 
 describe('convertSpringYAMLPropertyObject', () => {
-
     it('should split property keys correctly', () => {
-
         should(splitKey('foo.bar')).deepEqual(['foo', 'bar']);
         should(splitKey('foo[bar]')).deepEqual(['foo', 'bar']);
         should(splitKey('[foo][bar]')).deepEqual(['foo', 'bar']);
-        should(splitKey('foo[http://example.org]')).deepEqual(['foo', 'http://example.org']);
-        should(splitKey('mdm.definitions[https://vocab.eccenca.com/auth/AccessCondition]'))
-            .deepEqual(['mdm', 'definitions', 'https://vocab.eccenca.com/auth/AccessCondition']);
-        should(splitKey('[http://example.org]')).deepEqual(['http://example.org']);
-        should(splitKey('http://example.org]')).deepEqual(['http://example', 'org]']);
-        should(splitKey('[http://example.org]foo.bar')).deepEqual(['http://example.org', 'foo', 'bar']);
+        should(splitKey('foo[http://example.org]')).deepEqual([
+            'foo',
+            'http://example.org',
+        ]);
+        should(
+            splitKey(
+                'mdm.definitions[https://vocab.eccenca.com/auth/AccessCondition]'
+            )
+        ).deepEqual([
+            'mdm',
+            'definitions',
+            'https://vocab.eccenca.com/auth/AccessCondition',
+        ]);
+        should(splitKey('[http://example.org]')).deepEqual([
+            'http://example.org',
+        ]);
+        should(splitKey('http://example.org]')).deepEqual([
+            'http://example',
+            'org]',
+        ]);
+        should(splitKey('[http://example.org]foo.bar')).deepEqual([
+            'http://example.org',
+            'foo',
+            'bar',
+        ]);
         should(splitKey(['foo', 'bar'])).deepEqual(['foo', 'bar']);
         should(splitKey(1)).deepEqual([1]);
-
     });
-
 
     it('should convert a spring property object correctly', () => {
-
         const input = {
             'foo.bar.string': '123',
-            'foo.bar.array': ["a", "b", "c"],
+            'foo.bar.array': ['a', 'b', 'c'],
             '[http://example.org]foo.bar': {
-                'a.b': 12
-            }
+                'a.b': 12,
+            },
         };
 
-        const output =
-            {
-                "foo": {
-                    "bar": {
-                        "array": [
-                            "a",
-                            "b",
-                            "c",
-                        ],
-                        "string": "123"
-                    }
+        const output = {
+            foo: {
+                bar: {
+                    array: ['a', 'b', 'c'],
+                    string: '123',
                 },
-                "http://example.org": {
-                    "foo": {
-                        "bar": {
-                            "a": {
-                                "b": 12
-                            }
-                        }
-                    }
-                }
-            }
-        ;
+            },
+            'http://example.org': {
+                foo: {
+                    bar: {
+                        a: {
+                            b: 12,
+                        },
+                    },
+                },
+            },
+        };
 
         should(convertSpringPropertyObject(input)).deepEqual(output);
-
     });
-
 });
