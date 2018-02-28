@@ -1,6 +1,6 @@
 {
   "name": "@eccenca/utils",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "A set of small utility function that may not fit in any other package",
   "main": "es5/component.js",
   "es5": "es5/component.js",
